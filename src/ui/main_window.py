@@ -12,6 +12,8 @@ from src.modules.customer.ui.customer_view import CustomerView
 from src.modules.car.ui.car_view import CarView
 from src.modules.supplier.ui.supplier_view import SupplierView
 from src.modules.inventory.ui.stock_view import StockView
+from src.modules.accessory.ui.accessory_view import AccessoryView
+from src.modules.promotion.ui.promotion_view import PromotionView
 
 
 class MainWindow(QMainWindow):
@@ -39,6 +41,8 @@ class MainWindow(QMainWindow):
         self.sidebar.addItem("Xe")
         self.sidebar.addItem("Kho xe")
         self.sidebar.addItem("Nhà cung cấp")
+        self.sidebar.addItem("Phụ kiện")
+        self.sidebar.addItem("Khuyến mãi")
         self.sidebar.currentRowChanged.connect(self._on_sidebar_changed)
         main_layout.addWidget(self.sidebar)
 
@@ -83,6 +87,8 @@ class MainWindow(QMainWindow):
             "car": CarView(current_user=user),
             "stock": StockView(current_user=user),
             "supplier": SupplierView(current_user=user),
+            "accessory": AccessoryView(current_user=user),
+            "promotion": PromotionView(current_user=user),
         }
         for view in self._views.values():
             self.stack.addWidget(view)
@@ -96,7 +102,7 @@ class MainWindow(QMainWindow):
     def _on_sidebar_changed(self, index: int):
         if not self._session.is_logged_in():
             return
-        names = ["employee", "customer", "car", "stock", "supplier"]
+        names = ["employee", "customer", "car", "stock", "supplier", "accessory", "promotion"]
         if 0 <= index - 1 < len(names):
             view_name = names[index - 1]
             if view_name in self._views:
