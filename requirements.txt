@@ -1,0 +1,6 @@
+PyQt6>=6.6
+bcrypt>=4.0
+reportlab>=4.0
+pytest>=8.0
+pytest-qt>=4.2
+pyinstaller>=6.0
