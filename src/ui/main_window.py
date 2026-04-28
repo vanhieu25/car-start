@@ -8,6 +8,10 @@ from PyQt6.QtCore import Qt
 from src.app.session import Session
 from src.ui.login_dialog import LoginDialog
 from src.modules.employee.ui.employee_view import EmployeeView
+from src.modules.customer.ui.customer_view import CustomerView
+from src.modules.car.ui.car_view import CarView
+from src.modules.supplier.ui.supplier_view import SupplierView
+from src.modules.inventory.ui.stock_view import StockView
 
 
 class MainWindow(QMainWindow):
@@ -21,7 +25,6 @@ class MainWindow(QMainWindow):
         self._session = Session()
         self._session.expired.connect(self._on_session_expired)
 
-        # Layout chính
         central = QWidget()
         self.setCentralWidget(central)
         main_layout = QHBoxLayout(central)
@@ -32,28 +35,32 @@ class MainWindow(QMainWindow):
         self.sidebar = QListWidget()
         self.sidebar.setMaximumWidth(200)
         self.sidebar.addItem("Nhân viên")
+        self.sidebar.addItem("Khách hàng")
+        self.sidebar.addItem("Xe")
+        self.sidebar.addItem("Kho xe")
+        self.sidebar.addItem("Nhà cung cấp")
         self.sidebar.currentRowChanged.connect(self._on_sidebar_changed)
         main_layout.addWidget(self.sidebar)
 
-        # Stacked widget cho các view
+        # Stack
         self.stack = QStackedWidget()
         main_layout.addWidget(self.stack, 1)
 
-        # Placeholder khi chưa đăng nhập
+        # Placeholder
         self._placeholder = QLabel("Vui lòng đăng nhập để sử dụng ứng dụng")
         self._placeholder.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._placeholder.setStyleSheet("font-size: 18px; color: #666;")
         self.stack.addWidget(self._placeholder)
 
-        # Employee view
-        self._employee_view = None
+        # Module views (created after login)
+        self._views = {}
+        self._current_user = None
 
         # Status bar
         self.status = QStatusBar()
         self.setStatusBar(self.status)
         self.status.showMessage("Chưa đăng nhập")
 
-        # Hiển thị login dialog
         self._show_login()
 
     def _show_login(self):
@@ -64,26 +71,40 @@ class MainWindow(QMainWindow):
         user = dlg.get_user()
         if user:
             self._session.login(user)
+            self._current_user = user
+            self._init_views()
             self._update_ui_after_login()
 
+    def _init_views(self):
+        user = self._current_user
+        self._views = {
+            "employee": EmployeeView(current_user=user),
+            "customer": CustomerView(current_user=user),
+            "car": CarView(current_user=user),
+            "stock": StockView(current_user=user),
+            "supplier": SupplierView(current_user=user),
+        }
+        for view in self._views.values():
+            self.stack.addWidget(view)
+
     def _update_ui_after_login(self):
-        user = self._session.user
+        user = self._current_user
         role = user.get("role", "nhan_vien")
         self.status.showMessage(f"Đăng nhập: {user.get('username')} ({role})")
-
-        # Khởi tạo employee view
-        self._employee_view = EmployeeView(current_user=user)
-        self.stack.addWidget(self._employee_view)
         self.stack.setCurrentIndex(1)
 
     def _on_sidebar_changed(self, index: int):
         if not self._session.is_logged_in():
             return
-        if index == 0:  # Nhân viên
-            self.stack.setCurrentIndex(1 if self._employee_view else 0)
+        names = ["employee", "customer", "car", "stock", "supplier"]
+        if 0 <= index - 1 < len(names):
+            view_name = names[index - 1]
+            if view_name in self._views:
+                self.stack.setCurrentWidget(self._views[view_name])
 
     def _on_session_expired(self):
         self.status.showMessage("Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.")
         self.stack.setCurrentIndex(0)
-        self._employee_view = None
+        self._views = {}
+        self._current_user = None
         self._show_login()
