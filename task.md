@@ -53,7 +53,7 @@
 ## 0.6. Git Commit
 
 - [x] Tạo `.gitignore` (`__pycache__/`, `*.db`, `dist/`, `build/`, `*.spec`, `.venv/`).
-- [ ] Commit: `chore: scaffold project structure, db schema, smoke test`.
+- [x] Commit: `chore: scaffold project structure, db schema, smoke test`.
 
 ---
 
