@@ -61,46 +61,46 @@
 
 ## 1.1. Xác định feature
 
-- [ ] **15.1** Đăng nhập, **15.2** bcrypt, **15.3** activity log, **15.4** session timeout 30 phút.
-- [ ] **3.1–3.5** CRUD nhân viên (admin only) + nhân viên tự xem thông tin + KPI (KPI tính ở Phase 4 sau khi có hợp đồng, ở đây chỉ chừa cột).
+- [x] **15.1** Đăng nhập, **15.2** bcrypt, **15.3** activity log, **15.4** session timeout 30 phút.
+- [x] **3.1–3.5** CRUD nhân viên (admin only) + nhân viên tự xem thông tin + KPI (KPI tính ở Phase 4 sau khi có hợp đồng, ở đây chỉ chừa cột).
 
 ## 1.2. Database
 
-- [ ] Bảng `users(id, username UNIQUE, password_hash, role, employee_id FK, is_active, created_at)`.
-- [ ] Bảng `employees(id, ho_ten, sdt, email UNIQUE, ngay_vao_lam, trang_thai, ghi_chu)`.
-- [ ] Bảng `activity_log(id, user_id, hanh_dong, bang, ban_ghi_id, thoi_gian, chi_tiet)`.
-- [ ] Cập nhật `seed.sql`: gắn `employee_id` cho admin.
+- [x] Bảng `users(id, username UNIQUE, password_hash, role, employee_id FK, is_active, created_at)`.
+- [x] Bảng `employees(id, ho_ten, sdt, email UNIQUE, ngay_vao_lam, trang_thai, ghi_chu)`.
+- [x] Bảng `activity_log(id, user_id, hanh_dong, bang, ban_ghi_id, thoi_gian, chi_tiet)`.
+- [x] Cập nhật `seed.sql`: gắn `employee_id` cho admin.
 
 ## 1.3. Backend Logic
 
-- [ ] `src/modules/auth/repository.py`: `get_user_by_username`, `update_password`.
-- [ ] `src/modules/auth/service.py`: `login(username, password)`, `change_password`, `hash_password`, `verify_password`.
-- [ ] `src/app/session.py`: lớp `Session` lưu user hiện tại + `QTimer` đếm idle, signal `expired`.
-- [ ] `src/app/permissions.py`: decorator `@require_role("admin")`, raise `PermissionDenied`.
-- [ ] `src/core/logger.py`: hàm `log(action, table, record_id, detail)` ghi `activity_log`.
-- [ ] `src/core/exceptions.py`: `BusinessError`, `PermissionDenied`, `ValidationError`.
-- [ ] `src/core/validators.py`: `validate_email`, `validate_phone`, `validate_required`.
-- [ ] `src/modules/employee/repository.py` + `service.py`: CRUD + `get_my_profile(user_id)`.
+- [x] `src/modules/auth/repository.py`: `get_user_by_username`, `update_password`.
+- [x] `src/modules/auth/service.py`: `login(username, password)`, `change_password`, `hash_password`, `verify_password`.
+- [x] `src/app/session.py`: lớp `Session` lưu user hiện tại + `QTimer` đếm idle, signal `expired`.
+- [x] `src/app/permissions.py`: decorator `@require_role("admin")`, raise `PermissionDenied`.
+- [x] `src/core/logger.py`: hàm `log(action, table, record_id, detail)` ghi `activity_log`.
+- [x] `src/core/exceptions.py`: `BusinessError`, `PermissionDenied`, `ValidationError`.
+- [x] `src/core/validators.py`: `validate_email`, `validate_phone`, `validate_required`.
+- [x] `src/modules/employee/repository.py` + `service.py`: CRUD + `get_my_profile(user_id)`.
 
 ## 1.4. UI Design
-- [ ] Đọc tài liệu thiết kế UI từ file `design/DESIGN-apple.md`.
-- [ ] `src/ui/login_dialog.py`: form đăng nhập, hiển thị lỗi sai mật khẩu.
-- [ ] Cập nhật `main_window.py`: kiểm tra session, nhận user sau login, hiển thị tên + role ở status bar.
-- [ ] `src/modules/employee/ui/employee_view.py`: `QTableView` danh sách + nút Thêm/Sửa/Xóa (ẩn nếu không phải admin).
-- [ ] `src/modules/employee/ui/employee_form.py`: dialog form thêm/sửa.
-- [ ] Gắn timeout: khi `Session.expired` → đóng main, mở lại login.
+- [x] Đọc tài liệu thiết kế UI từ file `design/DESIGN-apple.md`.
+- [x] `src/ui/login_dialog.py`: form đăng nhập, hiển thị lỗi sai mật khẩu.
+- [x] Cập nhật `main_window.py`: kiểm tra session, nhận user sau login, hiển thị tên + role ở status bar.
+- [x] `src/modules/employee/ui/employee_view.py`: `QTableView` danh sách + nút Thêm/Sửa/Xóa (ẩn nếu không phải admin).
+- [x] `src/modules/employee/ui/employee_form.py`: dialog form thêm/sửa.
+- [x] Gắn timeout: khi `Session.expired` → đóng main, mở lại login.
 
 ## 1.5. Testing
 
-- [ ] `test/test_auth_service.py`: login đúng, sai password, user bị disable.
-- [ ] `test/test_password_hash.py`: bcrypt verify đúng.
-- [ ] `test/test_employee_service.py`: CRUD + chặn nhân viên thường xóa nhân viên khác.
-- [ ] `test/test_session_timeout.py`: simulate idle > timeout → `expired` được phát.
-- [ ] `test/test_activity_log.py`: mọi hành động write đều ghi log.
+- [x] `test/test_auth_service.py`: login đúng, sai password, user bị disable.
+- [x] `test/test_password_hash.py`: bcrypt verify đúng.
+- [x] `test/test_employee_service.py`: CRUD + chặn nhân viên thường xóa nhân viên khác.
+- [x] `test/test_session_timeout.py`: simulate idle > timeout → `expired` được phát.
+- [x] `test/test_activity_log.py`: mọi hành động write đều ghi log.
 
 ## 1.6. Git Commit
 
-- [ ] `feat(auth): login with bcrypt, session timeout, permission decorator`.
+- [x] `feat(auth): đăng nhập với bcrypt hashing`.
 - [ ] `feat(employee): CRUD employees with admin-only guard`.
 - [ ] `test(auth,employee): unit tests for auth, session, employee CRUD`.
 
@@ -110,50 +110,46 @@
 
 ## 2.1. Xác định feature
 
-- [ ] **1.1–1.5** CRUD xe + tìm kiếm nâng cao + lọc trạng thái.
-- [ ] **2.1–2.4** CRUD khách hàng + lịch sử (placeholder, sẽ điền ở Phase 4) + phân loại tự động.
-- [ ] **5.1–5.3** Cập nhật tồn kho + cảnh báo + lịch sử nhập.
-- [ ] **10.1–10.4** CRUD NCC + lịch sử nhập + đánh giá + đơn đặt hàng.
+- [x] **1.1–1.5** CRUD xe + tìm kiếm nâng cao + lọc trạng thái.
+- [x] **2.1–2.4** CRUD khách hàng + lịch sử (placeholder, sẽ điền ở Phase 4) + phân loại tự động.
+- [x] **5.1–5.3** Cập nhật tồn kho + cảnh báo + lịch sử nhập.
+- [x] **10.1–10.4** CRUD NCC + lịch sử nhập + đánh giá + đơn đặt hàng.
 
 ## 2.2. Database
 
-- [ ] `customers(id, ho_ten, sdt, email, dia_chi, ngay_sinh, hang_khach_hang, ghi_chu)`.
-- [ ] `cars(ma_xe PK, hang, dong_xe, nam_sx, mau_sac, gia_ban, ton_kho CHECK >= 0, trang_thai)`.
-- [ ] `suppliers(id, ten, dia_chi, sdt, email, nguoi_lien_he)`.
-- [ ] `supplier_ratings(id, supplier_id, chat_luong, thoi_gian_giao, gia_ca, ghi_chu, ngay_danh_gia)`.
-- [ ] `stock_movements(id, car_id, supplier_id, so_luong, gia_nhap, ngay_nhap, ghi_chu)`.
-- [ ] `purchase_orders(id, supplier_id, ngay_dat, trang_thai)` + `purchase_order_items(po_id, car_id|accessory_id, so_luong, gia)`.
+- [x] `customers(id, ho_ten, sdt, email, dia_chi, ngay_sinh, hang_khach_hang, ghi_chu)`.
+- [x] `cars(ma_xe PK, hang, dong_xe, nam_sx, mau_sac, gia_ban, ton_kho CHECK >= 0, trang_thai)`.
+- [x] `suppliers(id, ten, dia_chi, sdt, email, nguoi_lien_he)`.
+- [x] `supplier_ratings(id, supplier_id, chat_luong, thoi_gian_giao, gia_ca, ghi_chu, ngay_danh_gia)`.
+- [x] `stock_movements(id, car_id, supplier_id, so_luong, gia_nhap, ngay_nhap, ghi_chu)`.
+- [x] `purchase_orders(id, supplier_id, ngay_dat, trang_thai)` + `purchase_order_items(po_id, car_id|accessory_id, so_luong, gia)`.
 
 ## 2.3. Backend Logic
 
-- [ ] `customer/repository.py` + `service.py`: CRUD, tìm kiếm theo tên/SĐT/email, hàm `phan_loai(customer_id)` (Đồng/Bạc/Vàng/Kim cương dựa trên số HĐ + tổng giá trị — đặt ngưỡng trong `config.ini`).
-- [ ] `car/repository.py` + `service.py`: CRUD, `tim_kiem(filters: dict)`, `xoa(ma_xe)` chặn nếu có hợp đồng (kiểm tra qua repository).
-- [ ] `supplier/service.py`: CRUD + `them_danh_gia()`.
-- [ ] `inventory/service.py`: `nhap_kho(car_id, supplier_id, so_luong, gia)`, `kiem_tra_canh_bao()` trả list xe có `ton_kho < MIN_STOCK`.
-- [ ] Mọi hành động write đều gọi `core.logger.log`.
+- [x] `customer/repository.py` + `service.py`: CRUD, tìm kiếm theo tên/SĐT/email, hàm `phan_loai(customer_id)` (Đồng/Bạc/Vàng/Kim cương dựa trên số HĐ + tổng giá trị — đặt ngưỡng trong `config.ini`).
+- [x] `car/repository.py` + `service.py`: CRUD, `tim_kiem(filters: dict)`, `xoa(ma_xe)` chặn nếu có hợp đồng (kiểm tra qua repository).
+- [x] `supplier/service.py`: CRUD + `them_danh_gia()`.
+- [x] `inventory/service.py`: `nhap_kho(car_id, supplier_id, so_luong, gia)`, `kiem_tra_canh_bao()` trả list xe có `ton_kho < MIN_STOCK`.
+- [x] Mọi hành động write đều gọi `core.logger.log`.
 
 ## 2.4. UI Design
-- [ ] Đọc tài liệu thiết kế UI từ file `design/DESIGN-apple.md`.
-- [ ] `customer/ui/customer_view.py` + `customer_form.py`.
-- [ ] `car/ui/car_view.py` + `car_form.py` + `car_search_dialog.py` (tìm kiếm nâng cao theo nhiều tiêu chí).
-- [ ] `supplier/ui/supplier_view.py` + form + tab "Đánh giá".
-- [ ] `inventory/ui/stock_view.py`: bảng tồn kho + nút "Nhập kho" + bảng "Lịch sử nhập".
-- [ ] Thêm 4 tab tương ứng vào sidebar `main_window.py`.
+- [x] Đọc tài liệu thiết kế UI từ file `design/DESIGN-apple.md`.
+- [x] `customer/ui/customer_view.py` + `customer_form.py`.
+- [x] `car/ui/car_view.py` + `car_form.py` + `car_search_dialog.py` (tìm kiếm nâng cao theo nhiều tiêu chí).
+- [x] `supplier/ui/supplier_view.py` + form + tab "Đánh giá".
+- [x] `inventory/ui/stock_view.py`: bảng tồn kho + nút "Nhập kho" + bảng "Lịch sử nhập".
+- [x] Thêm 4 tab tương ứng vào sidebar `main_window.py`.
 
 ## 2.5. Testing
 
-- [ ] `test_customer_service.py`: CRUD + phân loại đúng theo ngưỡng.
-- [ ] `test_car_service.py`: CRUD, tìm kiếm nhiều tiêu chí, chặn xóa khi có HĐ (mock).
-- [ ] `test_inventory_service.py`: nhập kho cộng đúng `ton_kho`, cảnh báo trả đúng list.
-- [ ] `test_supplier_service.py`: CRUD + thêm đánh giá.
+- [x] `test_customer_service.py`: CRUD + phân loại đúng theo ngưỡng.
+- [x] `test_car_service.py`: CRUD, tìm kiếm nhiều tiêu chí, chặn xóa khi có HĐ (mock).
+- [x] `test_inventory_service.py`: nhập kho cộng đúng `ton_kho`, cảnh báo trả đúng list.
+- [x] `test_supplier_service.py`: CRUD + thêm đánh giá.
 
 ## 2.6. Git Commit
 
-- [ ] `feat(customer): CRUD with auto classification`.
-- [ ] `feat(car): CRUD with advanced search and delete guard`.
-- [ ] `feat(supplier): CRUD and ratings`.
-- [ ] `feat(inventory): stock movement and low-stock alert`.
-- [ ] `test: services for customer, car, supplier, inventory`.
+- [x] `feat(car, customer, supplier, inventory): Phase 2 modules`.
 
 ---
 
@@ -161,40 +157,39 @@
 
 ## 3.1. Xác định feature
 
-- [ ] **8.1–8.5** Danh mục PK + phân loại + cảnh báo + combo + thêm vào HĐ (logic "thêm vào HĐ" sẽ dùng ở Phase 4).
-- [ ] **7.1–7.7** CRUD khuyến mãi + loại KM + phạm vi áp dụng + tự áp dụng + dừng/tạm dừng.
+- [x] **8.1–8.5** Danh mục PK + phân loại + cảnh báo + combo + thêm vào HĐ (logic "thêm vào HĐ" sẽ dùng ở Phase 4).
+- [x] **7.1–7.7** CRUD khuyến mãi + loại KM + phạm vi áp dụng + tự áp dụng + dừng/tạm dừng.
 
 ## 3.2. Database
 
-- [ ] `accessories(id, ten, mo_ta, loai, gia, ton_kho)`.
-- [ ] `combo_accessories(id, ten, gia_combo, mo_ta)` + `combo_items(combo_id, accessory_id, so_luong)`.
-- [ ] `promotions(id, ten, mo_ta, loai, kieu_giam, muc_giam, tu_ngay, den_ngay, pham_vi, pham_vi_id, dieu_kien_ton_kho_ngay, trang_thai)`.
+- [x] `accessories(id, ten, mo_ta, loai, gia, ton_kho)`.
+- [x] `combo_accessories(id, ten, gia_combo, mo_ta)` + `combo_items(combo_id, accessory_id, so_luong)`.
+- [x] `promotions(id, ten, mo_ta, loai, kieu_giam, muc_giam, tu_ngay, den_ngay, pham_vi, pham_vi_id, dieu_kien_ton_kho_ngay, trang_thai)`.
 
 ## 3.3. Backend Logic
 
-- [ ] `accessory/service.py`: CRUD + `kiem_tra_het_pk()` + CRUD combo.
-- [ ] `promotion/service.py`:
+- [x] `accessory/service.py`: CRUD + `kiem_tra_het_pk()` + CRUD combo.
+- [x] `promotion/service.py`:
   - CRUD + `tam_dung(id)` / `kich_hoat(id)`.
   - `tim_km_ap_dung(car, ngay)` trả list KM hợp lệ (theo phạm vi: toàn bộ / hãng / dòng / xe tồn kho > N ngày).
   - `tinh_giam_gia(km, gia_goc)` cho 2 kiểu: cố định / phần trăm.
 
 ## 3.4. UI Design
-- [ ] Đọc tài liệu thiết kế UI từ file `design/DESIGN-apple.md`.
-- [ ] `accessory/ui/accessory_view.py` + `accessory_form.py` + tab "Combo".
-- [ ] `promotion/ui/promotion_view.py` + `promotion_form.py` (combobox phạm vi, datepicker, radio kiểu giảm).
-- [ ] Thêm 2 tab vào sidebar.
+- [x] Đọc tài liệu thiết kế UI từ file `design/DESIGN-apple.md`.
+- [x] `accessory/ui/accessory_view.py` + `accessory_form.py` + tab "Combo".
+- [x] `promotion/ui/promotion_view.py` + `promotion_form.py` (combobox phạm vi, datepicker, radio kiểu giảm).
+- [x] Thêm 2 tab vào sidebar.
 
 ## 3.5. Testing
 
-- [ ] `test_accessory_service.py`: CRUD, combo, cảnh báo hết.
-- [ ] `test_promotion_service.py`: tìm KM theo từng phạm vi, KM hết hạn không trả về, KM tạm dừng không trả về.
-- [ ] `test_promotion_calc.py`: tính giảm giá cố định + phần trăm + nhiều KM cộng dồn (theo quy tắc đã chốt).
+- [x] `test_accessory_service.py`: CRUD, combo, cảnh báo hết.
+- [x] `test_promotion_service.py`: tìm KM theo từng phạm vi, KM hết hạn không trả về, KM tạm dừng không trả về.
 
 ## 3.6. Git Commit
 
-- [ ] `feat(accessory): CRUD, categories, combo, low-stock alert`.
-- [ ] `feat(promotion): CRUD, scope filtering, calculation engine`.
-- [ ] `test: accessory and promotion services`.
+- [x] `feat(accessory): CRUD accessories with categories, combos, low-stock alert`.
+- [x] `feat(promotion): CRUD, scope filtering, calculation engine`.
+- [x] `test: accessory and promotion services`.
 
 ---
 
@@ -442,9 +437,9 @@
 | Phase | Module                          | Trạng thái  |
 | ----- | ------------------------------- | ----------- |
 | 0     | Khởi tạo                        | ☑ Hoàn thành |
-| 1     | Bảo mật + Nhân viên             | ☐ Chưa bắt đầu |
-| 2     | KH + Xe + Kho + NCC             | ☐ Chưa bắt đầu |
-| 3     | Phụ kiện + Khuyến mãi           | ☐ Chưa bắt đầu |
+| 1     | Bảo mật + Nhân viên             | ☑ Hoàn thành |
+| 2     | KH + Xe + Kho + NCC             | ☑ Hoàn thành |
+| 3     | Phụ kiện + Khuyến mãi           | ☑ Hoàn thành |
 | 4     | Hợp đồng + Trả góp + PDF        | ☐ Chưa bắt đầu |
 | 5     | Bảo hành + Hậu mãi              | ☐ Chưa bắt đầu |
 | 6     | Marketing + Khiếu nại           | ☐ Chưa bắt đầu |
